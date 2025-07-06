@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
   <!-- Header -->
@@ -33,6 +33,7 @@
   </header>
   <!-- End Header -->
 
+<main>
 <section class="auth-form">
     <h2>Login</h2>
     <form action="auth/login_process.php" method="post">
@@ -46,6 +47,7 @@
     </form>
     <p>Belum punya akun? <a href="register.html">Daftar di sini</a></p>
 </section>
+</main>
 
   <!-- Footer -->
   <footer>
