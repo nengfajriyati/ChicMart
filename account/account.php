@@ -27,7 +27,7 @@
   <nav class="nav-right">
     <ul>
       <li><a href="../index.html">Home</a></li>
-      <li><a href="product.php">Product</a></li>
+      <li><a href="../product/product.php">Product</a></li>
       <li><a href="../account/account.php">Account</a></li>
       <li><a href="../cart/cart.php">Cart 🛒</a></li>
     </ul>
@@ -40,7 +40,7 @@
   <section>
     <div class="login-container">
       <h2 style="text-align: center;" >ChicMart</h2>
-      <form action="#" method="POST">
+      <form action="../index.html" method="POST">
         <label for="username">Usename/Email:</label>
         <input type="text" id="username" name="username" placeholder="Masukkan nama pengguna" required>
         <label for="password">Password:</label>
@@ -49,7 +49,7 @@
           <input type="checkbox" name="remember"> Ingat saya
         </label>
         <button type="submit">Login</button>
-        <p>Belum punya akun? <a href="account/register.php">Daftar sekarang</a>.</p>
+        <p>Belum punya akun? <a href="../account/register.php">Daftar sekarang</a>.</p>
       </form>
     </div>
   </section>
