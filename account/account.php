@@ -11,45 +11,53 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="icon" href="img/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="login.css"/>
 </head>
 <body>
-  <!-- Header -->
-  <header class="top-header">
-    <div class="logo-left">
-      <h1><span class="chic">Chic</span><span class="mart">Mart</span></h1>
-    </div>
-    <div class="search-bar">
-     <input type="text" placeholder="Cari produk..." />
-     <button type="submit"><i class="fas fa-search"></i></button>
-    </div>
-    <nav class="nav-right">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="product/product.php">Product</a></li>
-        <li><a href="account/account.php">Account</a></li>
-        <li><a href="cart/cart.php">Cart 🛒</a></li>
-      </ul>
-    </nav>
-  </header>
-  <!-- End Header -->
 
-<main>
-<section class="auth-form">
-    <h2>Login</h2>
-    <form action="auth/login_process.php" method="post">
-        <label>Email:</label>
-        <input type="email" name="email" required>
-        
-        <label>Password:</label>
-        <input type="password" name="password" required>
-        
+<!-- Header -->
+<header class="top-header">
+  <div class="logo-left">
+    <h1><span class="chic">Chic</span><span class="mart">Mart</span></h1>
+  </div>
+  <div class="search-bar">
+    <input type="text" placeholder="Cari produk..." />
+    <button type="submit"><i class="fas fa-search"></i></button>
+  </div>
+  <nav class="nav-right">
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="product.php">Product</a></li>
+      <li><a href="../account/account.php">Account</a></li>
+      <li><a href="../cart/cart.php">Cart 🛒</a></li>
+    </ul>
+  </nav>
+</header>
+<!-- End Header -->
+
+<!-- Main Content -->
+ <main >
+  <section>
+    <div class="login-container">
+      <h2 style="text-align: center;" >ChicMart</h2>
+      <form action="#" method="POST">
+        <label for="username">Usename/Email:</label>
+        <input type="text" id="username" name="username" placeholder="Masukkan nama pengguna" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Masukkan kata sandi" required>
+        <label>
+          <input type="checkbox" name="remember"> Ingat saya
+        </label>
         <button type="submit">Login</button>
-    </form>
-    <p>Belum punya akun? <a href="register.html">Daftar di sini</a></p>
-</section>
+        <p>Belum punya akun? <a href="account/register.php">Daftar sekarang</a>.</p>
+      </form>
+    </div>
+  </section>
 </main>
 
-  <!-- Footer -->
+<!-- End Main Content -->
+
+<!-- Footer -->
   <footer>
   <div class="footer-container">
     <div class="footer-column">
@@ -84,7 +92,6 @@
   <p class="copyright">© 2025 ChicMart. All rights reserved.</p>
 </footer>
 <!-- End Footer -->
-</body>
-</html>
+
 </body>
 </html>
