@@ -12,7 +12,7 @@ session_start();
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -29,7 +29,7 @@ session_start();
   <nav class="nav-right">
     <ul>
       <li><a href="../index.html">Home</a></li>
-      <li><a href="product.php">Product</a></li>
+      <li><a href="../product/product.php">Product</a></li>
       <li><a href="../account/account.php">Account</a></li>
       <li><a href="../cart/cart.php">Cart 🛒</a></li>
     </ul>
@@ -78,6 +78,13 @@ session_start();
       <td colspan="4" align="right"><strong>Total:</strong></td>
       <td><strong>Rp<?php echo number_format($total, 0, ',', '.'); ?></strong></td>
     </tr>
+    <tr>
+    <td colspan="5" align="right">
+      <a href="checkout.php" class="btn-checkout">
+        <i class="fas fa-credit-card"></i> Checkout
+      </a>
+    </td>
+  </tr>
   </table>
 
   <?php else: ?>
