@@ -50,7 +50,10 @@
             <img src="../img/<?php echo $row['gambar']; ?>" alt="<?php echo $row['nama']; ?>">
             <h4><?php echo $row['nama']; ?></h4>
             <p>Rp<?php echo number_format($row['harga'], 0, ',', '.'); ?></p>
-            <a href="#" class="btn-detail">Detail Produk</a>
+            <a href="detail_product.php?id=<?= $row['id']; ?>" class="btn-detail">Detail Produk</a>
+
+
+
             <form method="post" action="../functions/cart.php">
               <input type="hidden" name="produk_id" value="<?php echo $row['id']; ?>">
               <button type="submit" class="btn-add">Add to Cart</button>
