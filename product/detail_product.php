@@ -68,6 +68,14 @@ $produk = mysqli_fetch_assoc($query);
     <h1><?= htmlspecialchars($produk['nama']); ?></h1>
     <div class="price">Rp<?= number_format($produk['harga'], 0, ',', '.'); ?></div>
     <div class="desc"><?= nl2br(htmlspecialchars($produk['deskripsi'])); ?></div>
+
+  <?php if (!empty($produk['deskripsi_lengkap'])): ?>
+    <div class="desc-lengkap">
+      <h3>Deskripsi Lengkap</h3>
+      <p><?= nl2br(htmlspecialchars($produk['deskripsi_lengkap'])); ?></p>
+    </div>
+  <?php endif; ?>
+
     
     <!-- Tombol Tambah ke Keranjang -->
     <form method="post" action="../functions/cart.php">
