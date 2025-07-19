@@ -918,15 +918,16 @@ footer .copyright {
 /* ========== CHECKOUT BUTTON ========== */
 .btn-checkout {
   display: inline-block;
-  padding: 12px 40px;
-  margin-top: 10px;
-  margin-right: 10px;
+  padding: 12px 24px;
+  margin-top: 20px;
   background-color: #B88C65;
   color: white;
   text-decoration: none;
   border-radius: 8px;
   font-weight: 600;
   font-size: 15px;
+  border: none;
+  cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
@@ -936,37 +937,26 @@ footer .copyright {
   box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
-.checkout-form input,
-.checkout-form textarea {
-  width: 100%;
-  max-width: 400px;
-  padding: 10px;
-  border: 1px solid #EADCD2;
-  border-radius: 6px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 14px;
-  color: #5E463B;
-  background-color: #fffaf6;
-}
-
-.checkout-form label {
-  font-weight: 600;
-  color: #5E463B;
-}
-
-/* ========== CHECKOUT FORM - STYLING INPUT & TEXTAREA ========== */
+/* ========== CHECKOUT FORM CONTAINER ========== */
 .checkout-form {
   max-width: 500px;
-  margin-top: 30px;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
+/* ========== LABEL ========== */
 .checkout-form label {
   display: block;
   margin-bottom: 6px;
   font-weight: 600;
   color: #5E463B;
+  font-size: 14px;
 }
 
+/* ========== INPUT & TEXTAREA ========== */
 .checkout-form input,
 .checkout-form textarea {
   width: 100%;
@@ -978,20 +968,13 @@ footer .copyright {
   font-size: 14px;
   background-color: #fffaf6;
   color: #5E463B;
+  transition: border-color 0.3s ease;
 }
 
-/* Tombol checkout form */
-.checkout-form button.btn-checkout {
-  width: 100%;
-  margin-top: 0;
-}
-
-/* ========== RESPONSIVE - TABEL CART GULIR DI MOBILE ========== */
-@media (max-width: 768px) {
-  .cart-table {
-    overflow-x: auto;
-    display: block;
-  }
+.checkout-form input:focus,
+.checkout-form textarea:focus {
+  border-color: #B88C65;
+  outline: none;
 }
 
 
@@ -1097,5 +1080,10 @@ footer .copyright {
 
   .detail-info {
     text-align: center;
+  }
+
+  .cart-table {
+    overflow-x: auto;
+    display: block;
   }
 }

@@ -5,7 +5,6 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
   exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -14,33 +13,32 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-
 <main class="main-content">
   <h2>Checkout</h2>
 
-  <h4>Ringkasan Pesanan:</h4>
-  <ul>
+  <h4>Ringkasan Pesanan</h4>
+  <ul class="summary">
     <?php
     $total = 0;
-    foreach ($_SESSION['cart'] as $item):
-      $subtotal = $item['harga'] * $item['jumlah'];
-      $total += $subtotal;
+    foreach ($_SESSION['cart'] as $it) {
+      $sub = $it['harga'] * $it['jumlah'];
+      $total += $sub;
+      echo "<li>{$it['jumlah']} × {$it['nama']} – Rp" .
+           number_format($sub,0,',','.') . "</li>";
+    }
     ?>
-      <li><?php echo $item['jumlah']; ?> x <?php echo $item['nama']; ?> - Rp<?php echo number_format($subtotal, 0, ',', '.'); ?></li>
-    <?php endforeach; ?>
   </ul>
-  <p><strong>Total: Rp<?php echo number_format($total, 0, ',', '.'); ?></strong></p>
+  <p><strong>Total: Rp<?= number_format($total,0,',','.') ?></strong></p>
 
-  <form method="post" action="checkout_proses.php" class="checkout-form">
-    <label for="nama">Nama:</label><br>
-    <input type="text" id="nama" name="nama" required><br><br>
+  <form class="checkout-form" method="post" action="checkout_proses.php">
+    <label for="nama">Nama Lengkap</label>
+    <input id="nama" name="nama" required>
 
-    <label for="alamat">Alamat:</label><br>
-    <textarea id="alamat" name="alamat" rows="4" required></textarea><br><br>
+    <label for="alamat">Alamat Lengkap</label>
+    <textarea id="alamat" name="alamat" rows="4" required></textarea>
 
     <button type="submit" class="btn-checkout">Kirim Pesanan</button>
   </form>
 </main>
-
 </body>
 </html>
