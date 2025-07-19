@@ -36,15 +36,15 @@
 <!-- End Header -->
 
 <!-- Main Content -->
- <main >
+<main >
   <section>
     <div class="login-container">
       <h2 style="text-align: center;" >ChicMart</h2>
       <form action="../index.html" method="POST">
-        <label for="username">Usename/Email:</label>
-        <input type="text" id="username" name="username" placeholder="Masukkan nama pengguna" required>
+        <label for="username">Username/Email:</label>
+        <input type="text" id="username" name="username" placeholder="Masukkan Username/Email" required>
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" placeholder="Masukkan kata sandi" required>
+        <input type="password" id="password" name="password" placeholder="Masukkan Password" required>
         <label>
           <input type="checkbox" name="remember"> Ingat saya
         </label>

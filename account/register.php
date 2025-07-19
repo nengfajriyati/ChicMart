@@ -10,7 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="login.css">
 </head>
 <body>
   <!-- Header -->
@@ -35,6 +36,26 @@
 
 <!-- Main Register -->
 
+<main >
+  <section>
+    <div class="login-container">
+      <h2 style="text-align: center;" >ChicMart</h2>
+      <form action="../index.html" method="POST">
+        <label for="username">Usename:</label>
+        <input type="text" id="username" name="username" placeholder="Masukkan Username" required>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" placeholder="Masukkan Email" required>
+        <label for="password">Buat Password:</label>
+        <input type="password" id="password" name="password" placeholder="Masukkan Password" required>
+        <label for="password">Konfirmasi Password:</label>
+        <input type="password" id="password" name="password" placeholder="Masukkan Password" required>
+
+        <button type="submit">Register</button>
+        <p>Sudah punya akun ? <a href="../account/account.php">Login</a>.</p>
+      </form>
+    </div>
+  </section>
+</main>
 
 
 <!-- End Register -->
