@@ -1,3 +1,23 @@
+<?php
+require '../includes/configaccount.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+    $sql = "INSERT INTO user (username, email, password) VALUES ('$username', '$email', '$password')";
+    
+    if ($conn->query($sql) === TRUE) {
+        header("Location: account.php?success=1");
+        exit;
+    } else {
+        $error = "Gagal registrasi: " . $conn->error;
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -22,7 +42,7 @@
   
     <nav class="nav-right">
       <ul>
-        <li><a href="../index.html">Home</a></li>
+        <li><a href="../index.php">Home</a></li>
         <li><a href="../product/product.php">Product</a></li>
         <li><a href="../account/account.php">Account</a></li>
         <li><a href="../cart/cart.php">Cart 🛒</a></li>
@@ -37,15 +57,15 @@
   <section>
     <div class="login-container">
       <h2 style="text-align: center;" >ChicMart</h2>
-      <form action="../index.html" method="POST">
+      <?php if(isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
+      <form method="POST">
         <label for="username">Usename:</label>
-        <input type="text" id="username" name="username" placeholder="Masukkan Username" required>
+        <input type="text" name="username" placeholder="Masukkan Username" required>
         <label for="email">Email:</label>
-        <input type="text" id="email" name="email" placeholder="Masukkan Email" required>
+        <input type="text"  name="email" placeholder="Masukkan Email" required>
         <label for="password">Buat Password:</label>
-        <input type="password" id="password" name="password" placeholder="Masukkan Password" required>
-        <label for="password">Konfirmasi Password:</label>
-        <input type="password" id="password" name="password" placeholder="Masukkan Password" required>
+        <input type="password"  name="password" placeholder="Masukkan Password" required>
+
 
         <button type="submit">Register</button>
         <p>Sudah punya akun ? <a href="../account/account.php">Login</a>.</p>

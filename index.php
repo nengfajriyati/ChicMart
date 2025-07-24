@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -24,6 +28,11 @@
     </div>
     <nav class="nav-right">
       <ul>
+    <?php if(isset($_SESSION['username'])): ?>
+        <span>Halo, <?php echo $_SESSION['username']; ?>!</span> | 
+        <a href="account/logout.php">Logout</a>
+
+    <?php endif; ?>
         <li><a href="index.html">Home</a></li>
         <li><a href="product/product.php">Product</a></li>
         <li><a href="account/account.php">Account</a></li>
