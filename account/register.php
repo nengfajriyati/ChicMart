@@ -19,10 +19,7 @@
     <div class="logo-left">
       <h1><span class="chic">Chic</span><span class="mart">Mart</span></h1>
     </div>
-    <div class="search-bar">
-     <input type="text" placeholder="Cari produk..." />
-     <button type="submit"><i class="fas fa-search"></i></button>
-    </div>
+  
     <nav class="nav-right">
       <ul>
         <li><a href="../index.html">Home</a></li>
