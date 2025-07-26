@@ -27,7 +27,7 @@
   </div>
   <nav class="nav-right">
     <ul>
-      <li><a href="../index.html">Home</a></li>
+      <li><a href="../index.php">Home</a></li>
       <li><a href="product.php">Product</a></li>
       <li><a href="../account/account.php">Account</a></li>
       <li><a href="../cart/cart.php">Cart 🛒</a></li>
