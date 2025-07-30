@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2025 at 02:56 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Waktu pembuatan: 30 Jul 2025 pada 21.12
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,72 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `produk`
+-- Struktur dari tabel `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `customer_name` varchar(100) NOT NULL,
+  `address` text NOT NULL,
+  `total` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `orders`
+--
+
+INSERT INTO `orders` (`id`, `customer_name`, `address`, `total`, `created_at`) VALUES
+(1, 'Nurul Badaria', 'vgcgfcgfvhbhjbj', 735000, '2025-07-30 17:54:00'),
+(2, 'Eva yunizar ', 'jln.gemah sariu', 45000, '2025-07-30 18:00:25'),
+(3, 'Habiba Bugis', 'fgfet', 120000, '2025-07-30 18:15:30'),
+(4, 'Habiba Bugis', 'jl.', 120000, '2025-07-30 18:28:42'),
+(5, 'Habiba Bugis', 'jln', 45000, '2025-07-30 18:41:46'),
+(6, 'Sasya', 'jln.gemahsari', 195000, '2025-07-30 18:42:31'),
+(7, 'Nurul Badaria', 'jln.gemahsari\r\n', 120000, '2025-07-30 18:50:38'),
+(8, 'Nurul Badaria', 'jln.gemahsari\r\n', 0, '2025-07-30 18:55:44'),
+(9, 'Habiba Bugis', 'jln', 150000, '2025-07-30 18:56:12'),
+(10, 'Nurul Badaria', 'gemahsari 7', 60000, '2025-07-30 18:59:40'),
+(11, 'Neneng Fajriyati', 'iy', 45000, '2025-07-30 19:03:14');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `order_items`
+--
+
+CREATE TABLE `order_items` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `qty` int(11) NOT NULL,
+  `price` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `qty`, `price`) VALUES
+(1, 1, 4, 1, 120000),
+(2, 1, 2, 3, 150000),
+(3, 1, 3, 1, 45000),
+(4, 1, 1, 1, 120000),
+(5, 2, 3, 1, 45000),
+(6, 3, 4, 1, 120000),
+(7, 4, 4, 1, 120000),
+(8, 5, 3, 1, 45000),
+(9, 6, 2, 1, 150000),
+(10, 6, 3, 1, 45000),
+(11, 7, 1, 1, 120000),
+(12, 9, 2, 1, 150000),
+(13, 10, 17, 1, 60000),
+(14, 11, 3, 1, 45000);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `produk`
 --
 
 CREATE TABLE `produk` (
@@ -37,7 +102,7 @@ CREATE TABLE `produk` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `produk`
+-- Dumping data untuk tabel `produk`
 --
 
 INSERT INTO `produk` (`id`, `nama`, `harga`, `gambar`, `deskripsi`, `deskripsi_lengkap`) VALUES
@@ -63,20 +128,57 @@ INSERT INTO `produk` (`id`, `nama`, `harga`, `gambar`, `deskripsi`, `deskripsi_l
 --
 
 --
--- Indexes for table `produk`
+-- Indeks untuk tabel `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `order_items`
+--
+ALTER TABLE `order_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indeks untuk tabel `produk`
 --
 ALTER TABLE `produk`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `produk`
+-- AUTO_INCREMENT untuk tabel `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT untuk tabel `order_items`
+--
+ALTER TABLE `order_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `order_items`
+--
+ALTER TABLE `order_items`
+  ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `produk` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
