@@ -1,4 +1,6 @@
-<?php include '../includes/db.php'; ?>
+<?php include '../includes/db.php'; 
+
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -15,16 +17,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
-
-<!-- Header -->
 <header class="top-header">
   <div class="logo-left">
     <h1><span class="chic">Chic</span><span class="mart">Mart</span></h1>
   </div>
-  <div class="search-bar">
-    <input type="text" placeholder="Cari produk..." />
+
+  <!-- FORM SEARCH -->
+  <form class="search-bar" method="GET" action="product.php">
+    <input type="text" name="keyword" placeholder="Cari produk..." required />
     <button type="submit"><i class="fas fa-search"></i></button>
-  </div>
+  </form>
+
+  <!-- NAVIGASI -->
   <nav class="nav-right">
     <ul>
       <li><a href="../index.php">Home</a></li>
@@ -34,37 +38,50 @@
     </ul>
   </nav>
 </header>
-<!-- End Header -->
 
-<!-- Main Content -->
+
 <main class="main-content">
   <section class="products">
     <div class="container">
       <h3>Semua Produk</h3>
       <div class="product-list">
+
         <?php
-        $result = mysqli_query($conn, "SELECT * FROM produk");
-        while ($row = mysqli_fetch_assoc($result)) {
+        include '../includes/db.php';
+        if (isset($_GET['keyword'])) {
+          $keyword = mysqli_real_escape_string($conn, $_GET['keyword']);
+          $query = "SELECT * FROM produk WHERE nama LIKE '%$keyword%' OR deskripsi LIKE '%$keyword%'";
+        } else {
+          $query = "SELECT * FROM produk";
+        }
+
+        $result = mysqli_query($conn, $query);
+
+        if (mysqli_num_rows($result) > 0):
+          while ($row = mysqli_fetch_assoc($result)):
         ?>
-          <div class="product">
-            <img src="../img/<?php echo $row['gambar']; ?>" alt="<?php echo $row['nama']; ?>">
-            <h4><?php echo $row['nama']; ?></h4>
-            <p>Rp<?php echo number_format($row['harga'], 0, ',', '.'); ?></p>
-            <a href="detail_product.php?id=<?= $row['id']; ?>" class="btn-detail">Detail Produk</a>
+            <div class="product">
+              <img src="../img/<?php echo $row['gambar']; ?>" alt="<?php echo $row['nama']; ?>">
+              <h4><?php echo $row['nama']; ?></h4>
+              <p>Rp<?php echo number_format($row['harga'], 0, ',', '.'); ?></p>
+              <a href="detail_product.php?id=<?= $row['id']; ?>" class="btn-detail">Detail Produk</a>
 
+              <form method="post" action="../functions/cart.php">
+                <input type="hidden" name="produk_id" value="<?php echo $row['id']; ?>">
+                <button type="submit" class="btn-add">Add to Cart</button>
+              </form>
+            </div>
+        <?php
+          endwhile;
+        else:
+          echo "<p>Produk tidak ditemukan.</p>";
+        endif;
+        ?>
 
-
-            <form method="post" action="../functions/cart.php">
-              <input type="hidden" name="produk_id" value="<?php echo $row['id']; ?>">
-              <button type="submit" class="btn-add">Add to Cart</button>
-            </form>
-          </div>
-        <?php } ?>
       </div>
     </div>
   </section>
 </main>
-<!-- End Main Content -->
 
 <!-- Footer -->
   <footer>
