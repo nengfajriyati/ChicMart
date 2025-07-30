@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+include 'includes/db.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -22,10 +25,10 @@ session_start();
     <div class="logo-left">
       <h1><span class="chic">Chic</span><span class="mart">Mart</span></h1>
     </div>
-    <div class="search-bar" method="GET" action="product/product.php">
-     <input type="text" placeholder="Cari produk..." required  />
-     <button type="submit"><i class="fas fa-search"></i></button>
-    </div>
+<form class="search-bar" method="GET" action="product/product.php">
+    <input type="text" name="keyword" placeholder="Cari produk..." required />
+    <button type="submit"><i class="fas fa-search"></i></button>
+  </form>
     <nav class="nav-right">
       <ul>
     <?php if(isset($_SESSION['username'])): ?>
@@ -33,7 +36,7 @@ session_start();
         <a href="account/logout.php">Logout</a>
 
     <?php endif; ?>
-        <li><a href="index.html">Home</a></li>
+        <li><a href="index.php">Home</a></li>
         <li><a href="product/product.php">Product</a></li>
         <li><a href="account/account.php">Account</a></li>
         <li><a href="cart/cart.php">Cart 🛒</a></li>
@@ -45,6 +48,8 @@ session_start();
   <!-- Main Content -->
   <main class="main-content">
     <section class="hero">
+
+
       <div class="hero-text">
         <h2>Selamat Datang di <span>Chic</span>Mart</h2>
         <p>Tampil gaya dengan koleksi fashion kekinian</p>
@@ -55,6 +60,37 @@ session_start();
         <img src="img/model.png" alt="Seorang model mengenakan pakaian fashion dari ChicMart">
       </div>
     </section>
+          <?php
+          include '../includes/db.php';
+        if (isset($_GET['keyword'])) {
+          $keyword = mysqli_real_escape_string($conn, $_GET['keyword']);
+          $query = "SELECT * FROM produk WHERE nama LIKE '%$keyword%' OR deskripsi LIKE '%$keyword%'";
+        } else {
+          $query = "SELECT * FROM produk";
+        }
+
+        $result = mysqli_query($conn, $query);
+
+        if (mysqli_num_rows($result) > 0):
+          while ($row = mysqli_fetch_assoc($result)):
+        ?>
+            <div class="product">
+              <img src="../img/<?php echo $row['gambar']; ?>" alt="<?php echo $row['nama']; ?>">
+              <h4><?php echo $row['nama']; ?></h4>
+              <p>Rp<?php echo number_format($row['harga'], 0, ',', '.'); ?></p>
+              <a href="detail_product.php?id=<?= $row['id']; ?>" class="btn-detail">Detail Produk</a>
+
+              <form method="post" action="../functions/cart.php">
+                <input type="hidden" name="produk_id" value="<?php echo $row['id']; ?>">
+                <button type="submit" class="btn-add">Add to Cart</button>
+              </form>
+            </div>
+        <?php
+          endwhile;
+        else:
+          echo "<p>Produk tidak ditemukan.</p>";
+        endif;
+        ?>
     <!-- End Main Content -->
 
     <!-- New Product -->
