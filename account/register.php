@@ -1,5 +1,5 @@
 <?php
-require '../includes/configaccount.php';
+require '../includes/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];

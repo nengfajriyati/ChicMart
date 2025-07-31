@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Jul 2025 pada 21.12
+-- Waktu pembuatan: 31 Jul 2025 pada 11.06
 -- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.0.30
+-- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,28 +29,42 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
-  `customer_name` varchar(100) NOT NULL,
-  `address` text NOT NULL,
   `total` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `user_id` int(11) DEFAULT NULL,
+  `nama` varchar(100) DEFAULT NULL,
+  `alamat` text DEFAULT NULL,
+  `no_hp` varchar(20) DEFAULT NULL,
+  `metode` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `orders`
 --
 
-INSERT INTO `orders` (`id`, `customer_name`, `address`, `total`, `created_at`) VALUES
-(1, 'Nurul Badaria', 'vgcgfcgfvhbhjbj', 735000, '2025-07-30 17:54:00'),
-(2, 'Eva yunizar ', 'jln.gemah sariu', 45000, '2025-07-30 18:00:25'),
-(3, 'Habiba Bugis', 'fgfet', 120000, '2025-07-30 18:15:30'),
-(4, 'Habiba Bugis', 'jl.', 120000, '2025-07-30 18:28:42'),
-(5, 'Habiba Bugis', 'jln', 45000, '2025-07-30 18:41:46'),
-(6, 'Sasya', 'jln.gemahsari', 195000, '2025-07-30 18:42:31'),
-(7, 'Nurul Badaria', 'jln.gemahsari\r\n', 120000, '2025-07-30 18:50:38'),
-(8, 'Nurul Badaria', 'jln.gemahsari\r\n', 0, '2025-07-30 18:55:44'),
-(9, 'Habiba Bugis', 'jln', 150000, '2025-07-30 18:56:12'),
-(10, 'Nurul Badaria', 'gemahsari 7', 60000, '2025-07-30 18:59:40'),
-(11, 'Neneng Fajriyati', 'iy', 45000, '2025-07-30 19:03:14');
+INSERT INTO `orders` (`id`, `total`, `created_at`, `user_id`, `nama`, `alamat`, `no_hp`, `metode`) VALUES
+(1, 735000, '2025-07-30 17:54:00', NULL, NULL, NULL, NULL, NULL),
+(2, 45000, '2025-07-30 18:00:25', NULL, NULL, NULL, NULL, NULL),
+(3, 120000, '2025-07-30 18:15:30', NULL, NULL, NULL, NULL, NULL),
+(4, 120000, '2025-07-30 18:28:42', NULL, NULL, NULL, NULL, NULL),
+(5, 45000, '2025-07-30 18:41:46', NULL, NULL, NULL, NULL, NULL),
+(6, 195000, '2025-07-30 18:42:31', NULL, NULL, NULL, NULL, NULL),
+(7, 120000, '2025-07-30 18:50:38', NULL, NULL, NULL, NULL, NULL),
+(8, 0, '2025-07-30 18:55:44', NULL, NULL, NULL, NULL, NULL),
+(9, 150000, '2025-07-30 18:56:12', NULL, NULL, NULL, NULL, NULL),
+(10, 60000, '2025-07-30 18:59:40', NULL, NULL, NULL, NULL, NULL),
+(11, 45000, '2025-07-30 19:03:14', NULL, NULL, NULL, NULL, NULL),
+(12, 120000, '2025-07-30 19:16:14', NULL, NULL, NULL, NULL, NULL),
+(13, 120000, '2025-07-31 04:21:52', NULL, NULL, NULL, NULL, NULL),
+(14, 150000, '2025-07-31 04:25:01', NULL, NULL, NULL, NULL, NULL),
+(15, 120000, '2025-07-31 04:34:17', NULL, NULL, NULL, NULL, NULL),
+(16, 45000, '2025-07-31 06:11:30', NULL, NULL, NULL, NULL, NULL),
+(18, 45000, '2025-07-31 07:51:42', 6, 'Neneng Fajriyati', 'Jl. Kedungmundu No.18, Kedungmundu, Kec. Tembalang, Kota Semarang, Jawa Tengah 50273', '08583382669', 'Transfer Bank'),
+(19, 45000, '2025-07-31 07:55:34', 6, 'Neneng Fajriyati', 'Jl. Kedungmundu No.18, Kedungmundu, Kec. Tembalang, Kota Semarang, Jawa Tengah 50273', '08583382669', 'Transfer Bank'),
+(20, 45000, '2025-07-31 07:55:48', 6, 'Ayuni Gita Lestari', 'Jl. Kedungmundu No.18, Kedungmundu, Kec. Tembalang, Kota Semarang, Jawa Tengah 50273', '08583382669', 'Transfer Bank'),
+(21, 45000, '2025-07-31 08:06:16', 6, 'Neneng Fajriyati', 'Jl. Kedungmundu No.18, Kedungmundu, Kec. Tembalang, Kota Semarang, Jawa Tengah 50273', '08583382669', 'Transfer Bank'),
+(22, 45000, '2025-07-31 08:06:54', 6, 'Neneng Fajriyati', 'Jl. Kedungmundu No.18, Kedungmundu, Kec. Tembalang, Kota Semarang, Jawa Tengah 50273', '08583382669', 'Transfer Bank'),
+(23, 45000, '2025-07-31 08:10:04', 6, 'Ayuni Gita Lestari', 'Jl. Kedungmundu No.18, Kedungmundu, Kec. Tembalang, Kota Semarang, Jawa Tengah 50273', '08583382669', 'Transfer Bank');
 
 -- --------------------------------------------------------
 
@@ -84,7 +98,28 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `qty`, `price`) VALUE
 (11, 7, 1, 1, 120000),
 (12, 9, 2, 1, 150000),
 (13, 10, 17, 1, 60000),
-(14, 11, 3, 1, 45000);
+(14, 11, 3, 1, 45000),
+(15, 12, 1, 1, 120000),
+(16, 13, 4, 1, 120000),
+(17, 14, 2, 1, 150000),
+(18, 15, 4, 1, 120000),
+(19, 16, 3, 1, 45000),
+(20, 23, 3, 1, 45000);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `payments`
+--
+
+CREATE TABLE `payments` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `metode` varchar(50) NOT NULL,
+  `status` varchar(50) DEFAULT 'Belum Dibayar',
+  `bukti_bayar` varchar(255) DEFAULT NULL,
+  `tanggal_bayar` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -123,6 +158,32 @@ INSERT INTO `produk` (`id`, `nama`, `harga`, `gambar`, `deskripsi`, `deskripsi_l
 (16, 'Stripped Sweater', 50000, 'stripped-sweater.jpg', 'Stripped sweater berbahan cotton wool cocok digunakan di musim dingin', 'Warna & Motif:\r\n\r\nKombinasi Warna: Hitam & Hijau\r\n\r\nMotif striped (garis-garis horizontal) yang memberikan kesan dinamis dan modis\r\n\r\nPerpaduan warna hijau dan hitam memberikan tampilan tegas namun tetap segar, cocok untuk berbagai warna kulit dan gaya\r\n\r\nBahan:\r\n\r\nRajut Knit Premium / Cotton Knit / Acrylic Blend (tergantung model)\r\n\r\nTekstur halus dan lembut di kulit\r\n\r\nNyaman, tidak gatal, dan tidak panas\r\n\r\nElastis, mengikuti bentuk tubuh tanpa terasa ketat\r\n\r\nBahan tebal namun tetap ringan, cocok untuk ruangan AC atau cuaca sejuk\r\n\r\nModel & Potongan:\r\n\r\nLengan panjang dengan model regular fit atau loose fit\r\n\r\nRound neckline (kerah bulat klasik) yang memberikan kesan simpel dan santai\r\n\r\nRib elastis pada bagian ujung lengan dan bagian bawah sweater, menjaga bentuk tetap pas saat dipakai\r\n\r\nPanjang menutupi pinggang/pinggul, cocok dipadukan dengan celana jeans, chinos, atau rok kasual\r\n\r\nUkuran Tersedia:\r\n\r\nS, M, L, XL, XXL (dengan panduan size chart)\r\n\r\nUnisex: bisa dipakai oleh pria maupun wanita\r\n\r\nFitur Tambahan:\r\n\r\nMotif garis-garis menciptakan ilusi visual yang membuat tubuh tampak lebih proporsional'),
 (17, 'Half Zipper Sweatshirt', 60000, 'halfzip-sweatshirt.jpg', 'Halfzipper sweatshirt dengan bahan cotton fleece ', 'Model & Desain:\r\n\r\nSweatshirt dengan resleting setengah (half-zip) pada bagian dada\r\n\r\nModel high-neck / mock neck, bisa dipakai terbuka atau tertutup\r\n\r\nMemberikan tampilan yang clean, sporty, dan modern\r\n\r\nPotongan regular fit atau oversized (tergantung model) yang nyaman untuk berbagai bentuk tubuh\r\n\r\nBisa dikenakan sebagai atasan utama atau outer tipis di atas kaos\r\n\r\nWarna Tersedia:\r\n\r\nUmumnya tersedia dalam warna solid seperti abu-abu, navy, hitam, krem, army, dan pastel\r\n\r\nTersedia juga dalam versi kombinasi warna (colorblock) atau sablon minimalis\r\n\r\nBahan:\r\n\r\nCotton Fleece / Baby Terry / French Terry / Cotton Blend\r\n\r\nBahan lembut, hangat, namun tetap ringan\r\n\r\nMenyerap keringat dan nyaman dipakai di iklim tropis atau ruangan ber-AC\r\n\r\nTidak mudah kusut dan tahan lama\r\n\r\nBagian dalam bisa berbulu halus (brushed) untuk kehangatan ekstra\r\n\r\nDetail Fitur:\r\n\r\nLengan panjang dengan rib elastis di pergelangan\r\n\r\nRib bottom hem menjaga bentuk tetap pas dan tidak melar\r\n\r\nResleting setengah badan memberikan opsi pemakaian fleksibel:\r\n\r\nDikenakan tertutup untuk kesan formal/sporty\r\n\r\nDikenakan terbuka untuk gaya lebih santai\r\n\r\nBeberapa model dilengkapi dengan kantong samping tersembunyi atau kangaroo pocket\r\n\r\nUkuran Tersedia:\r\n\r\nS, M, L, XL, hingga XXL\r\n\r\nTersedia dalam versi pria, wanita, atau unisex\r\n\r\nPanduan size chart disediakan untuk memudahkan pemilihan ukuran\r\n\r\nCocok Dipakai Untuk:\r\n\r\nAktivitas harian, olahraga ringan, kampus, traveling, nongkrong');
 
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `email`, `password`, `created_at`) VALUES
+(1, 'najwa12345', 'najwa@gmail.com', '$2y$10$C7Y10um4WMUawa44hkwRJeVAG1iVANQ7lJvhik6lt0Y8qkyaShNFm', '2025-07-24 17:28:01'),
+(2, 'aqilagaming', 'aqilagaming@gmail.com', '$2y$10$efsw44/xizNQhh2LjzLrTeq4Q8mWdxUTsZnTiK5g244RAvUyBKXNy', '2025-07-24 17:44:43'),
+(3, 'asu123', 'asu@gmail.com', '$2y$10$aUw/mJ/fKLG/1EDzh8S2YOzoIe7/lEQEo5FaWtYiEUUJvy2SW0LD6', '2025-07-24 17:54:00'),
+(4, 'asugaming', 'asugaming@gmail.com', '$2y$10$61bG86SaQ.UQOd.EgfMFI.owGLpT.fYCQDNlkD7h.ro0DRbshIzl6', '2025-07-24 18:53:45'),
+(5, 'neng', 'fajrneng@gmail.com', '$2y$10$dmHoEBrsnojoMHljr2v.O.paQf15PCRg4oymMgffHLWr5dP3twsu.', '2025-07-30 19:06:22'),
+(6, 'bibaa', 'nengfams@gmail.com', '$2y$10$.zRIb8tbYzTDfcfScXZieOeI5nKyU9AuNcLfF8QqZs5267CA8W8xa', '2025-07-31 07:51:12');
+
 --
 -- Indexes for dumped tables
 --
@@ -131,7 +192,8 @@ INSERT INTO `produk` (`id`, `nama`, `harga`, `gambar`, `deskripsi`, `deskripsi_l
 -- Indeks untuk tabel `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_user_orders` (`user_id`);
 
 --
 -- Indeks untuk tabel `order_items`
@@ -142,10 +204,25 @@ ALTER TABLE `order_items`
   ADD KEY `product_id` (`product_id`);
 
 --
+-- Indeks untuk tabel `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`);
+
+--
 -- Indeks untuk tabel `produk`
 --
 ALTER TABLE `produk`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -155,13 +232,19 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT untuk tabel `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT untuk tabel `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT untuk tabel `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `produk`
@@ -170,8 +253,20 @@ ALTER TABLE `produk`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
+-- AUTO_INCREMENT untuk tabel `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
+
+--
+-- Ketidakleluasaan untuk tabel `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `fk_user_orders` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- Ketidakleluasaan untuk tabel `order_items`
@@ -179,6 +274,12 @@ ALTER TABLE `produk`
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
   ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `produk` (`id`);
+
+--
+-- Ketidakleluasaan untuk tabel `payments`
+--
+ALTER TABLE `payments`
+  ADD CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

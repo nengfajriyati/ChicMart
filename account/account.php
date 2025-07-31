@@ -1,13 +1,16 @@
 <?php
-require '../includes/configaccount.php';
+require '../includes/db.php';
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $login_id = $_POST['login_id'];  // bisa username atau email
     $password = $_POST['password'];
 
-    $sql = "SELECT * FROM user WHERE username='$login_id' OR email='$login_id'";
-    $result = $conn->query($sql);
+    $stmt = $conn->prepare("SELECT * FROM user WHERE username=? OR email=?");
+    $stmt->bind_param("ss", $login_id, $login_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();

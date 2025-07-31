@@ -1,41 +1,41 @@
 <?php
 session_start();
-require_once '../includes/db.php';
+include '../includes/db.php';
 
-// Validasi jika bukan POST atau form kosong
-if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['nama'], $_POST['alamat'])) {
-  header("Location: cart.php");
-  exit;
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../account/login.php");
+    exit();
 }
 
-$nama   = mysqli_real_escape_string($conn, $_POST['nama']);
-$alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
-$total  = 0;
+$user_id = $_SESSION['user_id'];
+$nama = $_POST['nama'];
+$alamat = $_POST['alamat'];
+$no_hp = $_POST['no_hp'];
+$metode = isset($_POST['metode']) ? $_POST['metode'] : 'Transfer Bank';
 
-// Hitung total belanja
+// Hitung total
+$total = 0;
 foreach ($_SESSION['cart'] as $item) {
-  $total += $item['harga'] * $item['jumlah'];
+    $total += $item['harga'] * $item['jumlah'];
 }
 
 // Simpan ke tabel orders
-mysqli_query($conn, "INSERT INTO orders (customer_name, address, total) VALUES ('$nama', '$alamat', $total)")
-  or die("Gagal simpan order: " . mysqli_error($conn));
-$order_id = mysqli_insert_id($conn);
+mysqli_query($conn, "INSERT INTO orders (user_id, nama, alamat, no_hp, metode, total, created_at)
+VALUES ('$user_id', '$nama', '$alamat', '$no_hp', '$metode', '$total', NOW())");
 
-// Siapkan perintah insert ke order_items
-$stmt = mysqli_prepare($conn, "INSERT INTO order_items (order_id, product_id, qty, price) VALUES (?,?,?,?)");
-if (!$stmt) {
-  die("Query prepare gagal: " . mysqli_error($conn));
-}
+$order_id = mysqli_insert_id($conn); // ID pesanan
 
-// Simpan setiap item dalam order
+// Simpan produk-produk ke order_items
 foreach ($_SESSION['cart'] as $item) {
-  mysqli_stmt_bind_param($stmt, 'iiii', $order_id, $item['id'], $item['jumlah'], $item['harga']);
-  mysqli_stmt_execute($stmt);
-}
-mysqli_stmt_close($stmt);
+    $produk_id = $item['id'];
+    $qty = $item['jumlah'];
+    $price = $item['harga']; // harga satuan
 
-// Kosongkan keranjang setelah checkout
+    mysqli_query($conn, "INSERT INTO order_items (order_id, product_id, qty, price)
+    VALUES ('$order_id', '$produk_id', '$qty', '$price')");
+}
+
+// Kosongkan keranjang
 unset($_SESSION['cart']);
 ?>
 
@@ -44,86 +44,16 @@ unset($_SESSION['cart']);
 <head>
   <meta charset="UTF-8">
   <title>Pesanan Berhasil - ChicMart</title>
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../style.css"> <!-- CSS utama -->
 </head>
 <body>
-
-<!-- Header -->
-<header class="top-header">
-  <div class="logo-left">
-    <h1><span class="chic">Chic</span><span class="mart">Mart</span></h1>
-  </div>
-  <nav class="nav-right">
-    <ul>
-      <li><a href="../index.php">Home</a></li>
-      <li><a href="../product/product.php">Product</a></li>
-      <li><a href="../account/account.php">Account</a></li>
-      <li><a href="../cart/cart.php">Cart 🛒</a></li>
-    </ul>
-  </nav>
-</header>
-
-<!-- Main -->
 <main class="main-content">
   <h2>Terima kasih, <?= htmlspecialchars($nama) ?>! 🎉</h2>
-  <p>Pesanan kamu dengan nomor pemesanan <strong>#<?= $order_id ?></strong> telah berhasil diterima.</p> 
-
-  <p><strong>Produk yang kamu pesan:</strong></p>
-  <ul>
-    <?php
-    $result = mysqli_query($conn, "
-      SELECT produk.nama, order_items.qty 
-      FROM order_items 
-      JOIN produk ON order_items.product_id = produk.id 
-      WHERE order_items.order_id = $order_id
-    ") or die("Gagal ambil data produk: " . mysqli_error($conn));
-
-    while ($row = mysqli_fetch_assoc($result)) {
-      echo "<li>{$row['qty']} × {$row['nama']}</li>";
-    }
-    ?>
-  </ul>
-
-  <p><strong>Produk akan dikirim ke:</strong></p>
+  <p>Pesanan kamu dengan nomor <strong>#<?= $order_id ?></strong> telah berhasil diproses.</p>
+  <p>Metode Pembayaran: <strong><?= htmlspecialchars($metode) ?></strong></p>
+  <p>Produk akan dikirim ke:</p>
   <blockquote><?= nl2br(htmlspecialchars($alamat)) ?></blockquote>
-
   <a href="../index.php" class="btn-checkout">Kembali ke Beranda</a>
 </main>
-
-<!-- Footer -->
-<footer>
-  <div class="footer-container">
-    <div class="footer-column">
-      <h4>Tentang ChicMart</h4>
-      <p>ChicMart adalah toko fashion online <br> yang menghadirkan produk-produk 
-        <br> stylish untuk menunjang penampilan <br> Anda setiap hari.</p>
-    </div>
-    <div class="footer-column">
-      <h4>Kontak</h4>
-      <p>
-        <i class="fas fa-envelope"></i>
-        <a href="mailto:support@chicmart.com">support@chicmart.com</a><br>
-        <i class="fas fa-phone"></i>
-        <a href="https://wa.me/6285333082669">0853-3308-2669</a>
-      </p>
-    </div>
-    <div class="footer-column">
-      <h4>Ikuti Kami</h4>
-      <p>
-        <a href="https://instagram.com/chicmart" target="_blank">
-          <i class="fab fa-instagram"></i> Instagram | ChicMart Shop
-        </a><br>
-        <a href="https://facebook.com/chicmart" target="_blank">
-          <i class="fab fa-facebook"></i> Facebook | ChicMart Shop
-        </a><br>
-        <a href="https://tiktok.com/@chicmart" target="_blank">
-          <i class="fab fa-tiktok"></i> TikTok | ChicMart Shop
-        </a>
-      </p>
-    </div>
-  </div>
-  <p class="copyright">© 2025 ChicMart. All rights reserved.</p>
-</footer>
-
 </body>
 </html>
